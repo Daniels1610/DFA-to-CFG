@@ -19,6 +19,7 @@ if __name__ == "__main__":
     
     print(myDFA.getDefinitionDFA())
     print(myDFA.conversionToCFG(myDFA.transitionStates))
+    
 
 
     

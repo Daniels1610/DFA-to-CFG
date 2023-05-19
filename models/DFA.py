@@ -28,6 +28,7 @@ class DFA:
 
         for transition in transitionStates:
             rules[transition[0]].append(f"{transition[1]}{transition[2]}") 
-            
+
         return rules
+    
                 
