@@ -1,1 +1,23 @@
 __pycache__
+
+# Python/Django
+*.pyc
+*.pyo
+__pycache__/
+*.sqlite3
+
+# Secret keys
+.secret_key
+
+# Development files
+*.env
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Dependency directories
+venv/
+env/
+app_venv/
