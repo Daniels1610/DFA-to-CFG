@@ -36,9 +36,9 @@ function changeStates(statesDiv, quantity) {
         newRadio.type = "radio";
         newRadio.name = "states";
         // newRadio.value = stateRadio.value;
-        newDiv.appendChild(newCheckbox);
-        newDiv.appendChild(newP);
         newDiv.appendChild(newRadio);
+        newDiv.appendChild(newP);
+        newDiv.appendChild(newCheckbox);
         statesDiv.appendChild(newDiv);
     } else if (quantity === -1) {
         let lastDiv = statesDiv.lastChild;
