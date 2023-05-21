@@ -20,7 +20,7 @@
               <!-- Note -->
               <div class="flex flex-col py-2 text-sm text-neutral-500">
                 <div class="flex flex-row space-x-4">
-                  <p>&#9899;</p>
+                  <p class="text-xs">&#9899;</p>
                   <p>Selecciona el estado inicial</p>
                 </div>
                 <div class="flex flex-row space-x-4">
@@ -37,7 +37,7 @@
                     +
                     </button>
                 </div>
-                <div id="states-div" class="flex flex-col pt-4 mx-auto space-y-2 items-center">
+                <div id="states-div" class="flex flex-col pt-4 mx-auto space-y-2 items-center w-full">
 
                 </div>
             </div>
@@ -53,7 +53,7 @@
                     <p class="mt-2 text-sm text-gray-500" id="email-description">Separa cada símbolo con una coma.</p>
                 </div>
                 <div class="flex flex-row justify-center mx-auto mt-6">
-                    <button type="button" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Guardar alfabeto</button>
+                    <button type="button" id="process" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Guardar alfabeto</button>
                 </div>
             </div>
         </div>
@@ -62,6 +62,9 @@
         <div class="sm:mx-auto sm:w-full sm:max-w-[480px]">
             <div class="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12 h-96 min-h-full overflow-auto">
               <h2 class="mx-auto font-bold text-xl text-center">Función de transición</h2>
+              <div id="transitions" class="flex flex-col mt-4 space-y-6">
+
+              </div>
 
             </div>
         </div>
