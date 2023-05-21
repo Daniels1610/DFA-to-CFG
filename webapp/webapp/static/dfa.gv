@@ -1,0 +1,16 @@
+digraph {
+	rankdir=LR
+	node [shape=circle]
+	qi [shape=point]
+	A
+	qi -> A
+	A
+	B [shape=doublecircle]
+	C [shape=doublecircle]
+	A -> A [label=0]
+	A -> A [label=1]
+	B -> A [label=0]
+	B -> A [label=1]
+	C -> A [label=0]
+	C -> A [label=1]
+}

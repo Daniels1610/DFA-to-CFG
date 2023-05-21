@@ -116,7 +116,7 @@ function generateJSON() {
         alert("No hay estado inicial");
         return;
     }
-    let initialState = document.querySelector('input[name="start-state"]:checked').previousSibling.innerHTML;
+    let initialState = document.querySelector('input[name="start-state"]:checked').nextElementSibling.innerHTML;
     let acceptStates = document.getElementsByName("accept-states");
     let transitions = document.getElementsByClassName("transition-div");
 
@@ -147,7 +147,7 @@ function generateJSON() {
         transitionObject.transitions = [];
 
         for (let j = 0; j < currentTransitions.length; j++) {
-            transitionObject.transitions.push(currentTransitions[j].id);
+            transitionObject.transitions.push(currentTransitions[j].id[0] + currentTransitions[j].value);
         }
 
         transitionsArray.push(transitionObject);

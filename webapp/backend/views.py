@@ -12,11 +12,10 @@ def convertView(request):
         try:
             data = json.loads(request.body)
             states = []
-            transitions = []
+            transitions = {}
             for item in data['transitionFunction']:
                 states.append(item['state'])
-                for transition in item['transitions']:
-                    transitions.append(transition)
+                transitions[item['state']] = item['transitions']
 
             dfa = DFA(
                 states = states,
@@ -27,9 +26,11 @@ def convertView(request):
             )
 
             result = dfa.conversionToCFG()
+            diagram = dfa.drawDFA()
 
             # Return result as JSON
-            return JsonResponse({'status': 'success', 'result': result})
+            return JsonResponse({'status': 'success', 'result': result, 'diagram': diagram})
         except Exception as e:
             print(e)
             return JsonResponse({'status': 'failed'})
+
