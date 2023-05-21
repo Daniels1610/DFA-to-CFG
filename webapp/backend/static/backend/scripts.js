@@ -139,20 +139,15 @@ function generateJSON() {
         // Each state has its transitions as select tags with ids "StateTerminal", where State is the state name
         // and Terminal is the terminal that is being transitioned.
         // Get the values of all the select tags that are children of the transition div and store them in an array.
-        let transitionInputs = transition.querySelectorAll("select");
+        let currentTransitions = transition.querySelectorAll("select");
 
         // transitionState is in the form "Desde X:". Get only the X part.
         transitionState = transitionState.substring(6, transitionState.length - 1);
         transitionObject.state = transitionState;
         transitionObject.transitions = [];
 
-        for (let j = 0; j < transitionInputs.length; j++) {
-            let nextState = transitionInputs[j].value;
-
-            let transition = {};
-            transition.nextState = nextState;
-
-            transitionObject.transitions.push(transition);
+        for (let j = 0; j < currentTransitions.length; j++) {
+            transitionObject.transitions.push(currentTransitions[j].id);
         }
 
         transitionsArray.push(transitionObject);
@@ -203,9 +198,9 @@ async function sendDFA() {
     });
 
     let data = await response.json();
-    console.log(data);
     let result = document.getElementById("result");
-    result.innerHTML = data.result;
+    result.innerHTML = data.result.a;
+    console.log(data);
 
 }
 
@@ -296,7 +291,7 @@ function processInput() {
 
             let select = document.createElement("select");
             select.name = state.innerHTML + terminal;
-            select.id = state.innerHTML + terminal;
+            select.id = terminal + state.innerHTML;
 
             // Add an option for every state
             for (let k = 0; k < states.length; k++) {
