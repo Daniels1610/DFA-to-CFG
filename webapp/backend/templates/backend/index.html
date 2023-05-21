@@ -5,73 +5,84 @@
 
 {% block content %}
 <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 bg-white">
-    <div class="px-6 py-24 sm:py-32 lg:px-8">
+    <div class="px-6 sm:pt-32 sm:pb-16 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
             <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Conversor de AFD a GLC</h2>
             <p class="mt-6 text-lg leading-8 text-gray-600">Transforma tus Autómatas Finitos Deterministas en Potentes Gramáticas Libres de Contexto.</p>
         </div>
     </div>
 
-    <div class="flex flex-col py-24 space-y-12 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <!-- ESTADOS -->
-        <div class="sm:mx-auto sm:w-full sm:max-w-[480px] min-h-min">
-            <div class="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12 h-96 min-h-full overflow-auto">
-              <h2 class="mx-auto font-bold text-xl text-center">Estados</h2>
-              <!-- Note -->
-              <div class="flex flex-col py-2 text-sm text-neutral-500">
-                <div class="flex flex-row space-x-4">
-                  <p class="text-xs">&#9899;</p>
-                  <p>Selecciona el estado inicial</p>
+    <div id="parent-container" class="flex flex-col items-center space-y-6 pb-24 max-w-full">
+        <div class="flex flex-col space-y-12 lg:flex-row lg:space-x-12 lg:space-y-0 w-full">
+            <!-- ESTADOS -->
+            <div class="sm:mx-auto sm:w-full sm:max-w-[480px] min-h-min">
+                <div class="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12 h-96 min-h-full overflow-auto">
+                <h2 class="mx-auto font-bold text-xl text-center">Estados</h2>
+                <div class="flex flex-col py-2 text-sm text-neutral-500">
+                    <div class="flex flex-row space-x-4">
+                    <p class="text-xs">&#9899;</p>
+                    <p>Selecciona el estado inicial</p>
+                    </div>
+                    <div class="flex flex-row space-x-4">
+                    <p>&#9745;</p>
+                    <p>Marca los estados de aceptación</p>
+                    </div>
                 </div>
-                <div class="flex flex-row space-x-4">
-                  <p>&#9745;</p>
-                  <p>Marca los estados de aceptación</p>
+                    <div class="flex flex-row pt-2 mx-auto justify-center space-x-8 text-6xl ">
+                        <button id="minus" class="hover:cursor-pointer">
+                        -
+                        </button>
+                        <p id="states">0</p>
+                        <button id="plus" class="hover:cursor-pointer">
+                        +
+                        </button>
+                    </div>
+                    <div id="states-div" class="flex flex-col pt-4 mx-auto space-y-2 items-center w-full">
+
+                    </div>
                 </div>
-              </div>
-                <div class="flex flex-row pt-2 mx-auto justify-center space-x-8 text-6xl">
-                    <button id="minus" class="hover:cursor-pointer">
-                    -
-                    </button>
-                    <p id="states">0</p>
-                    <button id="plus" class="hover:cursor-pointer">
-                    +
-                    </button>
+            </div>
+
+            <!-- ALFABETO -->
+            <div class="sm:mx-auto sm:w-full sm:max-w-[480px]">
+                <div class="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12 h-96 min-h-full overflow-auto">
+                <h2 class="mx-auto font-bold text-xl text-center">Alfabeto</h2>
+                    <div class="pt-4">
+                        <label for="terminals" class="sr-only">Email</label>
+                        <input type="terminals" name="terminals" id="terminals" class="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="a, b, c">
+                        <p class="mt-2 text-sm text-gray-500" id="email-description">Separa cada símbolo con una coma.</p>
+                    </div>
+                    <div class="flex flex-row justify-center mx-auto mt-6">
+                        <button type="button" id="process" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Guardar alfabeto</button>
+                    </div>
                 </div>
-                <div id="states-div" class="flex flex-col pt-4 mx-auto space-y-2 items-center w-full">
+            </div>
+
+            <!-- FUNCIÓN DE TRANSICIÓN -->
+            <div class="sm:mx-auto sm:w-full sm:max-w-[480px]">
+                <div class="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12 h-96 min-h-full overflow-auto">
+                <h2 class="mx-auto font-bold text-xl text-center">Función de transición</h2>
+                <div id="transitions" class="flex flex-col mt-4 space-y-6">
+
+                </div>
 
                 </div>
             </div>
         </div>
-
-        <!-- ALFABETO -->
-        <div class="sm:mx-auto sm:w-full sm:max-w-[480px]">
-            <div class="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12 h-96 min-h-full overflow-auto">
-              <h2 class="mx-auto font-bold text-xl text-center">Alfabeto</h2>
-                <div class="pt-4">
-                    <label for="terminals" class="sr-only">Email</label>
-                    <input type="terminals" name="terminals" id="terminals" class="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="a, b, c">
-                    <p class="mt-2 text-sm text-gray-500" id="email-description">Separa cada símbolo con una coma.</p>
-                </div>
-                <div class="flex flex-row justify-center mx-auto mt-6">
-                    <button type="button" id="process" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Guardar alfabeto</button>
-                </div>
-            </div>
+        <div class="flex flex-row justify-center mx-auto mt-6">
+            <button type="button" id="generate" class="invisible rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Generar gramática</button>
         </div>
 
-        <!-- FUNCIÓN DE TRANSICIÓN -->
-        <div class="sm:mx-auto sm:w-full sm:max-w-[480px]">
-            <div class="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12 h-96 min-h-full overflow-auto">
-              <h2 class="mx-auto font-bold text-xl text-center">Función de transición</h2>
-              <div id="transitions" class="flex flex-col mt-4 space-y-6">
+        <div id="result">
 
-              </div>
-
-            </div>
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
+<script>
+  let convertView = "{% url 'landing:convertView' %}";
+</script>
 <script src="{% static 'backend/scripts.js' %}"></script>
 {% endblock %}

@@ -90,6 +90,125 @@ function clearTransitions() {
     transitions.innerHTML = "";
 }
 
+function processAlphabet(alphabet) {
+    // Remove spaces from the alphabet
+    alphabet = alphabet.replace(/ /g, "");
+    // Split the alphabet into an array
+    alphabet = alphabet.split(",");
+
+    return alphabet;
+}
+
+// Function to get:
+// + The states
+// + The alphabet
+// + The initial state
+// + The accept states
+// + The transitions
+// and store them in a JSON object that is sent to the server to be processed
+function generateJSON() {
+    let states = document.getElementsByClassName("state-name");
+    let alphabet = document.getElementById("terminals").value;
+    // Check if there is a radio button checked.
+    // If there is, get the state name of the radio button that is checked.
+    // If there isn't, alert the user that there is no initial state and return.
+    if (document.querySelector('input[name="start-state"]:checked') === null) {
+        alert("No hay estado inicial");
+        return;
+    }
+    let initialState = document.querySelector('input[name="start-state"]:checked').previousSibling.innerHTML;
+    let acceptStates = document.getElementsByName("accept-states");
+    let transitions = document.getElementsByClassName("transition-div");
+
+    // Process the alphabet to remove spaces and split it into an array
+    alphabet = processAlphabet(alphabet);
+
+    let acceptStatesArray = [];
+    for (let i = 0; i < acceptStates.length; i++) {
+        if (acceptStates[i].checked) {
+            acceptStatesArray.push(acceptStates[i].previousSibling.innerHTML);
+        }
+    }
+
+    let transitionsArray = [];
+    for (let i = 0; i < transitions.length; i++) {
+        let transition = transitions[i];
+        let transitionObject = {};
+        let transitionState = transition.firstChild.innerHTML;
+
+        // Each state has its transitions as select tags with ids "StateTerminal", where State is the state name
+        // and Terminal is the terminal that is being transitioned.
+        // Get the values of all the select tags that are children of the transition div and store them in an array.
+        let transitionInputs = transition.querySelectorAll("select");
+
+        // transitionState is in the form "Desde X:". Get only the X part.
+        transitionState = transitionState.substring(6, transitionState.length - 1);
+        transitionObject.state = transitionState;
+        transitionObject.transitions = [];
+
+        for (let j = 0; j < transitionInputs.length; j++) {
+            let nextState = transitionInputs[j].value;
+
+            let transition = {};
+            transition.nextState = nextState;
+
+            transitionObject.transitions.push(transition);
+        }
+
+        transitionsArray.push(transitionObject);
+    }
+
+    let json = {};
+    json.states = states.length;
+    json.alphabet = alphabet;
+    json.initialState = initialState;
+    json.acceptStates = acceptStatesArray;
+    json.transitionFunction = transitionsArray;
+
+    console.log(json);
+
+    return json;
+}
+
+// Function to retrieve the CSRF token from the cookie
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+async function sendDFA() {
+    let json = generateJSON();
+    // convertView is declared on index.html to use Django's url template tag
+    console.log(convertView);
+    const csrfToken = getCookie('csrftoken');
+    let response = await fetch(convertView, {
+        method: "POST",
+        // Django needs the csrf token to accept the request
+
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken
+        },
+        body: JSON.stringify(json)
+    });
+
+    let data = await response.json();
+    console.log(data);
+    let result = document.getElementById("result");
+    result.innerHTML = data.result;
+
+}
+
 // Function that triggers when the button with id "process" is clicked.
 // It creates a div for every state (which are the divs with class "state-name")
 // and adds them to the div with id "transitions". Each of these divs have an input
@@ -100,11 +219,49 @@ function processInput() {
     let states = document.getElementsByClassName("state-name");
     let terminals = document.getElementById("terminals").value;
     let transitions = document.getElementById("transitions");
+    let generate = document.getElementById("generate");
 
-    // Delete blank spaces from terminals
-    terminals = terminals.replace(/\s/g, "");
-    // Split terminals into an array
-    terminals = terminals.split(",");
+    // Delete blank spaces from terminals and split it into an array
+    terminals = processAlphabet(terminals);
+
+    // If terminals is empty, add an error message to the transitions div
+    // and return
+    if (terminals.length === 1) {
+        let errorMessage = document.createElement("p");
+        errorMessage.className = "error-message";
+        errorMessage.classList.add("text-red-500", "text-center", "text-xl");
+        errorMessage.innerHTML = "No se ha ingresado un alfabeto";
+        transitions.appendChild(errorMessage);
+        generate.classList.add("invisible");
+        return;
+    }
+
+    // If states is empty, add an error message to the transitions div
+    // and return
+    if (states.length === 0) {
+        let errorMessage = document.createElement("p");
+        errorMessage.className = "error-message";
+        errorMessage.classList.add("text-red-500", "text-center", "text-xl");
+        errorMessage.innerHTML = "No se ha ingresado ningún estado";
+        transitions.appendChild(errorMessage);
+        generate.classList.add("invisible");
+        return;
+    }
+
+    // If terminals contains an empty string, add an error message to the transitions div
+    // and return
+    for (let i = 0; i < terminals.length; i++) {
+        if (terminals[i] === "") {
+            let errorMessage = document.createElement("p");
+            errorMessage.className = "error-message";
+            errorMessage.classList.add("text-red-500", "text-center", "text-xl");
+            errorMessage.innerHTML = "El alfabeto contiene un símbolo vacío";
+            transitions.appendChild(errorMessage);
+        generate.classList.add("invisible");
+            return;
+        }
+    }
+
 
     // Iterate over every state
     // For every state, create a div with class "transition-div" and add it to the
@@ -117,7 +274,7 @@ function processInput() {
 
         // Add a header with the state name to the transition div
         let header = document.createElement("h2");
-        header.innerHTML = state.innerHTML;
+        header.innerHTML = "Desde " + state.innerHTML + ":";
         transitionDiv.appendChild(header);
 
         // For each terminal symbol, create div with class "transition-input-div"
@@ -162,6 +319,8 @@ function processInput() {
             transitions.appendChild(divider);
         }
     }
+
+    generate.classList.remove("invisible");
 }
 
 
@@ -172,7 +331,7 @@ window.onload = function() {
     let plus = document.getElementById("plus");
     let statesDiv = document.getElementById("states-div");
     let process = document.getElementById("process");
-
+    let generate = document.getElementById("generate");
 
     minus.addEventListener("click", function() {
         let statesValue = parseInt(states.innerHTML);
@@ -191,4 +350,5 @@ window.onload = function() {
     });
 
     process.addEventListener("click", processInput);
+    generate.addEventListener("click", sendDFA);
 }
