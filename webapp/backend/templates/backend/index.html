@@ -17,14 +17,28 @@
         <div class="sm:mx-auto sm:w-full sm:max-w-[480px]">
             <div class="bg-white px-6 py-6 shadow sm:rounded-lg sm:px-12">
               <h2 class="mx-auto font-bold text-xl text-center">Estados</h2>
+              <!-- Note -->
+              <div class="flex flex-col py-2 text-sm text-neutral-500">
+                <div class="flex flex-row space-x-4">
+                  <p>&#9899;</p>
+                  <p>Selecciona el estado inicial</p>
+                </div>
+                <div class="flex flex-row space-x-4">
+                  <p>&#9745;</p>
+                  <p>Marca los estados de aceptación</p>
+                </div>
+              </div>
                 <div class="flex flex-row pt-2 mx-auto justify-center space-x-8 text-6xl">
-                    <div id="minus" class="hover:cursor-pointer">
+                    <button id="minus" class="hover:cursor-pointer">
                     -
-                    </div>
+                    </button>
                     <p id="states">0</p>
-                    <div id="plus" class="hover:cursor-pointer">
+                    <button id="plus" class="hover:cursor-pointer">
                     +
-                    </div>
+                    </button>
+                </div>
+                <div id="states-div" class="flex flex-col pt-4 mx-auto space-y-2 items-center">
+
                 </div>
             </div>
         </div>
