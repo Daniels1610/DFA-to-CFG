@@ -31,4 +31,12 @@ class DFA:
 
         return rules
     
+    def displayCFG(self):
+        result = self.conversionToCFG(self.transitionStates) 
+        for key in result.keys():
+            transitions = []
+            for i in range(0, len(self.alphabet)):
+                transitions.append(result[key][i])
+            print(f"{key} -> {' | '.join(transitions)}")
+    
                 
