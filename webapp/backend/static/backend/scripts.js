@@ -186,6 +186,7 @@ async function sendDFA() {
     // convertView is declared on index.html to use Django's url template tag
     console.log(convertView);
     const csrfToken = getCookie('csrftoken');
+    console.log(csrfTokenn);
     let response = await fetch(convertView, {
         method: "POST",
         // Django needs the csrf token to accept the request

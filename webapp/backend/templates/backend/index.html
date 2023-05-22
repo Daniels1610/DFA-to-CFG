@@ -96,6 +96,7 @@
 {% block scripts %}
 <script>
   let convertView = "{% url 'landing:convertView' %}";
+  let csrfTokenn = "{{ csrf_token }}";
 </script>
 <script src="{% static 'backend/scripts.js' %}"></script>
 {% endblock %}
