@@ -73,7 +73,20 @@
             <button type="button" id="generate" class="invisible rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Generar gramática</button>
         </div>
 
-        <div id="result">
+        <div id="result-div" class="hidden flex flex-col items-center space-y-12 w-full">
+
+          <div>
+            <h2 class="text-center font-bold text-xl">Diagrama del autómata</h2>
+            <img id="diagram">
+          </div>
+
+            <hr class="border border-solid w-full">
+
+          <div>
+            <h2 class="text-center font-bold text-xl">Gramática libre de contexto</h2>
+            <div id="result">
+            </div>
+          </div>
 
         </div>
     </div>

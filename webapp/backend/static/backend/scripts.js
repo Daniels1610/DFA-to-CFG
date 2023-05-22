@@ -198,6 +198,16 @@ async function sendDFA() {
     });
 
     let data = await response.json();
+
+    // Show diagram
+    const imageBase64 = data.diagram;
+    const imgElement = document.getElementById("diagram");
+    imgElement.src = "data:image/png;base64," + imageBase64;
+
+    let resultsDiv = document.getElementById("result-div");
+    resultsDiv.classList.remove("hidden");
+
+    // Show result
     let result = document.getElementById("result");
     console.log(data);
     result.innerHTML = data.result;

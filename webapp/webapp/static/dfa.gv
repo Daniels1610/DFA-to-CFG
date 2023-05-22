@@ -5,12 +5,12 @@ digraph {
 	A
 	qi -> A
 	A
-	B
-	C
-	A -> A [label=0]
+	B [shape=doublecircle]
+	C [shape=doublecircle]
+	A -> B [label=0]
 	A -> A [label=1]
-	B -> A [label=0]
-	B -> A [label=1]
-	C -> A [label=0]
-	C -> A [label=1]
+	B -> C [label=0]
+	B -> B [label=1]
+	C -> C [label=0]
+	C -> C [label=1]
 }
