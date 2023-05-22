@@ -6,8 +6,11 @@ digraph {
 	qi -> A
 	A
 	B
-	A -> A [label=a]
-	A -> A [label=b]
-	B -> A [label=a]
-	B -> A [label=b]
+	C
+	A -> A [label=0]
+	A -> A [label=1]
+	B -> A [label=0]
+	B -> A [label=1]
+	C -> A [label=0]
+	C -> A [label=1]
 }
