@@ -193,7 +193,7 @@ async function sendDFA() {
 
         headers: {
             "Content-Type": "application/json",
-            "X-CSRFToken": csrfToken
+            "X-CSRFToken": csrfTokenn
         },
         body: JSON.stringify(json)
     });

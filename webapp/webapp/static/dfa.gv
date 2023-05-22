@@ -2,8 +2,8 @@ digraph {
 	rankdir=LR
 	node [shape=circle]
 	qi [shape=point]
-	B
-	qi -> B
+	A
+	qi -> A
 	A
 	B
 	C
