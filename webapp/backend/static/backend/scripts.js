@@ -199,8 +199,8 @@ async function sendDFA() {
 
     let data = await response.json();
     let result = document.getElementById("result");
-    result.innerHTML = data.result.a;
     console.log(data);
+    result.innerHTML = data.result;
 
 }
 

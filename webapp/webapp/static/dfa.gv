@@ -5,8 +5,8 @@ digraph {
 	A
 	qi -> A
 	A
-	B [shape=doublecircle]
-	C [shape=doublecircle]
+	B
+	C
 	A -> A [label=0]
 	A -> A [label=1]
 	B -> A [label=0]

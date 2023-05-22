@@ -1,4 +1,10 @@
+
+import os
+import tempfile
 import graphviz as gv
+
+from graphviz import Source
+from django.http import HttpResponse
 
 class DFA:
     states = []
@@ -63,4 +69,10 @@ class DFA:
             for transition in transitions:
                 dfa.edge(state, transition[1], label=transition[0])
         dfa.render('webapp/static/dfa.gv', view=False)
-        return dfa
+
+        image_data = dfa.pipe()
+
+        # Send the image data as an HTTP response
+        response = HttpResponse(content_type='image/png')
+        response.write(image_data)
+        return response

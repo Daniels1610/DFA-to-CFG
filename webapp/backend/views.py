@@ -1,5 +1,9 @@
+
+import io
+import base64
+from PIL import Image
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import DFA
 
 import json
@@ -26,10 +30,22 @@ def convertView(request):
             )
 
             result = dfa.conversionToCFG()
-            diagram = dfa.drawDFA()
+            diagram_img = dfa.drawDFA().content
+
+            img_stream = io.BytesIO(diagram_img)
+            img_base64 = base64.b64encode(img_stream.getvalue()).decode('utf-8')
 
             # Return result as JSON
-            return JsonResponse({'status': 'success', 'result': result, 'diagram': diagram})
+            # with image "diagram" as base64
+            data = {
+                'status': 'success',
+                'result': result,
+                'diagram': img_base64
+            }
+
+            response = HttpResponse(json.dumps(data), content_type='application/json')
+
+            return response
         except Exception as e:
             print(e)
             return JsonResponse({'status': 'failed'})
