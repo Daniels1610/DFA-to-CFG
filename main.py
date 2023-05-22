@@ -17,9 +17,11 @@ if __name__ == "__main__":
         acceptState=inputDFA[3]
     )
     
-    print(myDFA.getDefinitionDFA())
-    print(myDFA.conversionToCFG(myDFA.transitionStates))
-    
-
-
-    
+    # print(myDFA.getDefinitionDFA())
+    result = myDFA.conversionToCFG(myDFA.transitionStates) 
+    for key in result.keys():
+        transitions = []
+        for i in range(0, len(myDFA.alphabet)):
+            transitions.append(result[key][i])
+        print(f"{key} -> {' | '.join(transitions)}")
+        
