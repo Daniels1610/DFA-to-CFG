@@ -21,7 +21,7 @@ class DFA:
             "acceptState" : self.acceptState
         }
 
-    def conversionToCFG(self, transitionStates:list):
+    def conversionToCFG(self):
         rules = {}
         for transition in transitionStates:
             rules[transition[0]] = []

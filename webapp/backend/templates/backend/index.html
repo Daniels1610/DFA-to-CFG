@@ -83,13 +83,74 @@
             <hr class="border border-solid w-full">
 
           <div>
-            <h2 class="text-center font-bold text-xl">Gramática libre de contexto</h2>
-            <div id="result">
+            <h2 class="text-center font-bold text-xl ">Gramática libre de contexto</h2>
+            <div id="result-table" class="pt-6 text-center">
+                <div class="mt-4 flow-root">
+                    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Variable</th>
+                                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Valor</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">V</td>
+                                            <td id="vars" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">Σ</td>
+                                            <td id="sigma" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">S</td>
+                                            <td id="start-state" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">F</td>
+                                            <td id="accept-states" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="result-body">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="mt-6">
+                <h3 class="text-center font-bold text-xl">Reglas</h3>
+                <div id="transitions-cfg" class="mt-4 text-left">
+
+                </div>
             </div>
           </div>
-
         </div>
+        <div class="flex flex-col space-y-2" id="steps">
+            <h3 class="text-center font-bold text-xl">Pasos para generar GLC</h3>
+            <div id="steps-div">
+                <ol class="list-decimal">
+                    <li>Agregar una variable por cada estado del autómata: <span id="vars-span" class="font-bold"></span></li>
+                    <li>El estado inicial se convierte en la variable inicial: <span id="start-var" class="font-bold"></span></li>
+                    <li>Cada transición del AFD se convierte en una regla de la forma: xE <br> Donde "x" es la terminal que seguimos en la transición, y "E" es el estado al que nos lleva. Ejemplos:</li>
+                    <ol class="list-disc" id="ejemplos-transiciones">
+                    </ol>
+                    <li>A los estados de aceptación se les agrega una regla que nos lleve a la cadena vacía. Aquí la representamos como <span class="italic">eps</span>.</li>
+
+                </ol>
+            </div>
+        </div>
+
     </div>
+</div>
+
+<!-- Force tailwind to render these classes. Otherwise they don't appear, since they are added with js -->
+<div class="hidden space-x-6 text-red-500">
+</div>
+<div class="hidden space-x-2">
 </div>
 {% endblock %}
 

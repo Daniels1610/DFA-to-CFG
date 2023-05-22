@@ -76,3 +76,49 @@ class DFA:
         response = HttpResponse(content_type='image/png')
         response.write(image_data)
         return response
+
+    def transitions_str(self):
+        """
+        Convert the CFG to a string.
+        """
+
+        string = ""
+        string += self.startState + " -> "
+        for production in self.rules[self.startState]:
+            string += "".join(production) + " | "
+            # If startState is a final state, add the empty string
+        if self.startState in self.acceptStates:
+            string += "eps | "
+
+        # Remove the last bar
+        string = string[:-3]
+        # Add a newline
+        string += "\n"
+
+        for state in self.rules:
+            if state == self.startState:
+                continue
+            # Print in one line per state, separated by bars
+            string += state + " -> "
+            for production in self.rules[state]:
+                string += "".join(production) + " | "
+            if state in self.acceptStates:
+                string += "eps | "
+            # Remove the last bar
+            string = string[:-3]
+            # Add a newline
+            string += "\n"
+
+        # Return the string
+        return string
+
+    def displayCFG(self):
+        result = self.conversionToCFG()
+        s = ""
+        #
+        for key in result.keys():
+            transitions = []
+            for i in range(0, len(self.alphabet)):
+                transitions.append(result[key][i])
+            s += f"{key} -> {' | '.join(transitions)}\n"
+        return s

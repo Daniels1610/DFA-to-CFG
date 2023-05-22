@@ -40,7 +40,12 @@ def convertView(request):
             data = {
                 'status': 'success',
                 'result': result,
-                'diagram': img_base64
+                'diagram': img_base64,
+                'vars': ', '.join(dfa.states),
+                'terminals': ', '.join(dfa.alphabet),
+                'start': dfa.startState,
+                'accept': ', '.join(dfa.acceptStates),
+                'transitions': dfa.transitions_str()
             }
 
             response = HttpResponse(json.dumps(data), content_type='application/json')

@@ -209,9 +209,58 @@ async function sendDFA() {
     resultsDiv.classList.remove("hidden");
 
     // Show result
-    let result = document.getElementById("result");
+    let result = document.getElementById("result-table");
+    let transitionsDiv = document.getElementById("transitions-cfg");
+
+    let vars = data.vars;
+    let terminals = data.terminals;
+    let startState = data.start;
+    let acceptStates = data.accept;
+    var transitions = data.transitions;
+
+
+    // Split transitions into an array
+    // Each transition is separated by a newline
+    let examples = transitions.split("\n");
+
+    // Replace newlines with <br> tags
+    transitions = transitions.replace(/\n/g, "<br>");
+
     console.log(data);
-    result.innerHTML = data.result;
+
+    let vid = document.getElementById("vars");
+    let sid = document.getElementById("start-state");
+    let aid = document.getElementById("accept-states");
+    let tid = document.getElementById("sigma");
+
+    vid.innerHTML = vars;
+    sid.innerHTML = startState;
+    aid.innerHTML = acceptStates;
+    tid.innerHTML = terminals;
+
+    let spanVars = document.getElementById("vars-span");
+    let spanStart = document.getElementById("start-var");
+    let listTransitions = document.getElementById("ejemplos-transiciones");
+
+    spanVars.textContent = vars;
+    spanStart.textContent = startState;
+
+
+    // For each transition, create a list item and add it to the list
+    // with id "ejemplo-transiciones"
+    // Maximum of 4 transitions
+    console.log(examples);
+    let n = examples.length > 4 ? 4 : examples.length;
+    for (let i = 0; i < n; i++) {
+        if (examples[i] === "") {
+            continue;
+        }
+        let li = document.createElement("li");
+        li.innerHTML = examples[i];
+        listTransitions.appendChild(li);
+    }
+
+    transitionsDiv.innerHTML = transitions;
 
 }
 
