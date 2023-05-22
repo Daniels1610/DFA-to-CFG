@@ -230,10 +230,12 @@ async function sendDFA() {
 
     let vid = document.getElementById("vars");
     let sid = document.getElementById("start-state");
+    let aid = document.getElementById("accept-states");
     let tid = document.getElementById("sigma");
 
     vid.innerHTML = vars;
     sid.innerHTML = startState;
+    aid.innerHTML = acceptStates;
     tid.innerHTML = terminals;
 
     let spanVars = document.getElementById("vars-span");
