@@ -129,6 +129,7 @@
             </div>
           </div>
         </div>
+
         <div class="flex flex-col space-y-2" id="steps">
             <h3 class="text-center font-bold text-xl">Pasos para generar GLC</h3>
             <div id="steps-div">
@@ -138,11 +139,19 @@
                     <li>Cada transición del AFD se convierte en una regla de la forma: xE <br> Donde "x" es la terminal que seguimos en la transición, y "E" es el estado al que nos lleva. Ejemplos:</li>
                     <ol class="list-disc" id="ejemplos-transiciones">
                     </ol>
-                    <li>A los estados de aceptación se les agrega una regla que nos lleve a la cadena vacía. Aquí la representamos como <span class="italic">eps</span>.</li>
+                    <li>A los estados de aceptación se les agrega una regla que nos lleve a la cadena vacía. Aquí la representamos como <span class="italic">&epsilon;</span>.</li>
 
                 </ol>
             </div>
         </div>
+
+        <div class="flex flex-col space-y-2" id="producciones">
+            <h3 class="text-center font-bold text-xl">Generar producción aleatoria</h3>
+            <button type="button" id="produce" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Generar</button>
+            <div id="produccion-pasos" class="text-center">
+            </div>
+        </div>
+
 
     </div>
 </div>

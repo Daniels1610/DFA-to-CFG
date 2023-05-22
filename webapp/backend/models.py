@@ -88,7 +88,7 @@ class DFA:
             string += "".join(production) + " | "
             # If startState is a final state, add the empty string
         if self.startState in self.acceptStates:
-            string += "eps | "
+            string += "&epsilon; | "
 
         # Remove the last bar
         string = string[:-3]
@@ -103,7 +103,7 @@ class DFA:
             for production in self.rules[state]:
                 string += "".join(production) + " | "
             if state in self.acceptStates:
-                string += "eps | "
+                string += "&epsilon; | "
             # Remove the last bar
             string = string[:-3]
             # Add a newline

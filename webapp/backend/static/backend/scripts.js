@@ -245,6 +245,8 @@ async function sendDFA() {
     spanVars.textContent = vars;
     spanStart.textContent = startState;
 
+    // First clear the list
+    listTransitions.innerHTML = "";
 
     // For each transition, create a list item and add it to the list
     // with id "ejemplo-transiciones"
@@ -262,6 +264,76 @@ async function sendDFA() {
 
     transitionsDiv.innerHTML = transitions;
 
+}
+
+function generateRandomProduction() {
+    let variables = document.getElementById("vars").innerHTML;
+    let terminals = document.getElementById("sigma").innerHTML;
+    let start = document.getElementById("start-var").textContent;
+    let rules = document.getElementById("transitions-cfg").innerHTML;
+    // Generate object from ruls, where each key is a variable and each value is an array of productions
+    let productions = {};
+    let rulesArray = rules.split("<br>");
+    for (let i = 0; i < rulesArray.length; i++) {
+        let rule = rulesArray[i];
+        if (rule === "") {
+            continue;
+        }
+        // Get variable from rule
+        let variable = rule[0];
+
+        // Remove "&gt;" from the rule
+        rule = rule.substring(7);
+
+        // Split the rule into an array of productions
+        let productionsArray = rule.split("|");
+
+        // Remove spaces from the productions
+        for (let j = 0; j < productionsArray.length; j++) {
+            productionsArray[j] = productionsArray[j].trim();
+        }
+
+        // Add the productions to the variable
+        if (productions[variable] === undefined) {
+            productions[variable] = [];
+        }
+        productions[variable] = productions[variable].concat(productionsArray);
+
+    }
+    console.log(productions);
+    let productionsDiv = document.getElementById("produccion-pasos");
+    let vars = variables.split(",");
+    let terms = terminals.split(",");
+
+    // Start with the start variable
+    var production = start;
+    var result = start;
+
+    // While there are variables in the production, replace them with random productions following the CFG
+    // If there are no variables, the production is complete
+    var counter = 0;
+    while (production.match(/[A-Z]/)) {
+        console.log(production);
+        // Replace a single variable with a random right side of a production
+        let randomVar = production.match(/[A-Z]/)[0];
+        let randomTerm = productions[randomVar][Math.floor(Math.random() * productions[randomVar].length)];
+        if (randomTerm === "ε") {
+            randomTerm = "";
+        }
+        production = production.replace(randomVar, randomTerm)
+
+        // Append the production to the result separated by a newline
+        result += "<br>" + production;
+
+        if (counter > 100) {
+            result = "No se pudo generar una cadena con las reglas dadas";
+            break;
+        }
+        counter++;
+    }
+
+    productionsDiv.innerHTML = "";
+    productionsDiv.innerHTML = result;
 }
 
 // Function that triggers when the button with id "process" is clicked.
@@ -387,6 +459,7 @@ window.onload = function() {
     let statesDiv = document.getElementById("states-div");
     let process = document.getElementById("process");
     let generate = document.getElementById("generate");
+    let produce = document.getElementById("produce");
 
     minus.addEventListener("click", function() {
         let statesValue = parseInt(states.innerHTML);
@@ -406,4 +479,5 @@ window.onload = function() {
 
     process.addEventListener("click", processInput);
     generate.addEventListener("click", sendDFA);
+    produce.addEventListener("click", generateRandomProduction);
 }
